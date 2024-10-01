@@ -3,9 +3,11 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Loader from 'react-loaders';
 import AnimatedLetters from '../../AnimatedLetters';
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 const Contact = () => {
     const [letterClass, setLetterClass] = useState('text-animate');
+    const navigate = useNavigate();
     const refForm = useRef();
     const serviceId = "service_ec5kbb4";
     const templateId = "template_r06jj0a";
@@ -21,7 +23,7 @@ const Contact = () => {
             .then(
                 () => {
                     alert('Message sent successfully');
-                    window.location.reload(false);
+                    navigate('/');
                 },
                 () => {
                     alert('Failed to send the message, please try again');
