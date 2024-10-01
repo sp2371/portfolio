@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap-trial'
-import DrawSVGPlugin from 'gsap-trial/DrawSVGPlugin'
+import anime from 'animejs';
+
 import LogoS from '../../../assets/images/logo-s.png'
 import './index.scss'
 
@@ -10,19 +11,16 @@ const Logo = () => {
   const solidLogoRef = useRef()
 
   useEffect(() => {
-    gsap.registerPlugin(DrawSVGPlugin)
-
-    gsap
-      .timeline()
-      .to(bgRef.current, {
-        opacity: 1,
-        duration: 2,
-      })
-      .from(outlineLogoRef.current, {
-        drawSVG: 0,
-        duration: 20,
-      })
-
+    gsap.to(bgRef.current, {
+      opacity: 1,
+      duration: 2,
+    });
+    anime({
+      targets: outlineLogoRef.current,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      duration: 20000,
+      easing: 'linear',
+    });
     gsap.fromTo(
       solidLogoRef.current,
       {
@@ -33,11 +31,10 @@ const Logo = () => {
         delay: 4,
         duration: 4,
         rotation: 390,
-        ease: "power1.inOut"
+        ease: 'power1.inOut',
       }
-    )
-  }, [])
-
+    );
+  }, []);
   return (
     <div className="logo-container" ref={bgRef}>
       <img
